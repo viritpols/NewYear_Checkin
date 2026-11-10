@@ -1,7 +1,7 @@
 // Utility functions for localStorage management
 
-const STORAGE_KEY = 'newyear2025_checkin_state'
-const STORAGE_EXPIRY_KEY = 'newyear2025_checkin_expiry'
+const STORAGE_KEY = 'newyear2026_checkin_state'
+const STORAGE_EXPIRY_KEY = 'newyear2026_checkin_expiry'
 const EXPIRY_HOURS = 24 // ข้อมูลจะหมดอายุหลังจาก 24 ชั่วโมง
 
 export interface CheckInState {

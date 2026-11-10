@@ -63,7 +63,7 @@ const mitr = Mitr({
 })
 
 export const metadata: Metadata = {
-  title: 'ระบบเช็คอินงานปีใหม่ 2025',
+  title: 'ระบบเช็คอินงานปีใหม่ 2026',
   description: 'ระบบเช็คอินเข้างานปีใหม่สำหรับพนักงาน',
 }
 

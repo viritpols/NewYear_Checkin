@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: newyear2025-app
+    container_name: newyear2026-app
     restart: unless-stopped
     environment:
       - NODE_ENV=production
@@ -20,7 +20,7 @@ services:
     ports:
       - "${APP_PORT:-4101}:4101"
     networks:
-      - newyear2025-network
+      - newyear2026-network
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:4101/api/health || exit 1"]
       interval: 30s
@@ -31,7 +31,7 @@ services:
   # Nginx Reverse Proxy (Optional - comment out if using direct port 4101)
   # nginx:
   #   image: nginx:alpine
-  #   container_name: newyear2025-nginx
+  #   container_name: newyear2026-nginx
   #   restart: unless-stopped
   #   ports:
   #     - "${NGINX_HTTP_PORT:-80}:80"
@@ -44,7 +44,7 @@ services:
   #   depends_on:
   #     - app
   #   networks:
-  #     - newyear2025-network
+  #     - newyear2026-network
   #   healthcheck:
   #     test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health || exit 1"]
   #     interval: 30s
@@ -52,6 +52,6 @@ services:
   #     retries: 3
 
 networks:
-  newyear2025-network:
+  newyear2026-network:
     driver: bridge
 

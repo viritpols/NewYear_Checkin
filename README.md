@@ -1,4 +1,4 @@
-# 🎉 ระบบเช็คอินงานปีใหม่ 2025
+# 🎉 ระบบเช็คอินงานปีใหม่ 2026
 
 ระบบเช็คอินเข้างานปีใหม่สำหรับพนักงาน พัฒนาด้วย Next.js 14 และ TypeScript
 
@@ -83,7 +83,7 @@ npm start
 ## 📁 โครงสร้างโปรเจค
 
 ```
-newyear2025/
+newyear2026/
 ├── app/
 │   ├── page.tsx          # หน้าหลัก (Check-in Page)
 │   ├── layout.tsx        # Layout หลัก
@@ -180,9 +180,9 @@ MIT License
 
 ## 👨‍💻 Developer
 
-สร้างโดย AI Assistant สำหรับงานปีใหม่ 2025
+สร้างโดย AI Assistant สำหรับงานปีใหม่ 2026
 
 ---
 
-**Happy New Year 2025! 🎊🎉**
+**Happy New Year 2026! 🎊🎉**
 

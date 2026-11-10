@@ -2,9 +2,9 @@
 
 import { isIncognitoMode, isLocalStorageAvailable, getDeviceFingerprint } from './incognito'
 
-const DEVICE_ID_KEY = 'newyear2025_device_id'
-const DEVICE_CHECKIN_KEY = 'newyear2025_device_checkin'
-const DEVICE_FINGERPRINT_KEY = 'newyear2025_device_fingerprint'
+const DEVICE_ID_KEY = 'newyear2026_device_id'
+const DEVICE_CHECKIN_KEY = 'newyear2026_device_checkin'
+const DEVICE_FINGERPRINT_KEY = 'newyear2026_device_fingerprint'
 
 // ตรวจสอบว่าเป็น incognito mode หรือไม่
 export const checkIncognitoMode = async (): Promise<boolean> => {

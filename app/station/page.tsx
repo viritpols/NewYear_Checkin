@@ -539,17 +539,17 @@ export default function StationPage() {
           </div>
         )}
 
-        {/* Info Card - ข้อมูลงานปีใหม่ 2025 */}
+        {/* Info Card - ข้อมูลงานปีใหม่ 2026 */}
         <div className="mt-8 bg-gray-900/60 backdrop-blur-xl rounded-xl p-6 border border-blue-500/20 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-500"></div>
           <h3 className="font-semibold text-blue-400 mb-4 flex items-center text-lg">
             <span className="mr-2">ℹ️</span>
-            ข้อมูลงานปีใหม่ 2025
+            ข้อมูลงานปีใหม่ 2026
           </h3>
           <ul className="space-y-3 text-gray-300">
             <li className="flex items-start group">
               <span className="mr-3 text-blue-400">📅</span>
-              <span className="group-hover:text-white transition-colors">วันที่: 20 ธันวาคม 2025</span>
+              <span className="group-hover:text-white transition-colors">วันที่: 20 ธันวาคม 2026</span>
             </li>
             <li className="flex items-start group">
               <span className="mr-3 text-cyan-400">🕐</span>

@@ -35,7 +35,7 @@ export default function Header() {
             </div>
             <div className="text-xs text-gray-400 flex items-center gap-1">
               <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
-              Happy New Year 2025!
+              Happy New Year 2026!
             </div>
           </div>
         </div>

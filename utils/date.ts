@@ -10,11 +10,11 @@ export const toThaiTime = (dateString: string | Date | null | undefined): Date |
   if (dateString instanceof Date) {
     date = new Date(dateString)
   } else if (typeof dateString === 'string') {
-    // ถ้าเป็น string จาก MySQL (2025-12-13 11:56:13) ให้แปลงเป็น ISO format
+    // ถ้าเป็น string จาก MySQL (2026-12-13 11:56:13) ให้แปลงเป็น ISO format
     // MySQL datetime ไม่มี timezone info ดังนั้นเราจะถือว่าเป็นเวลาไทย (UTC+7)
     if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(dateString)) {
       // แปลง MySQL datetime เป็น ISO format โดยถือว่าเป็นเวลาไทย
-      // ตัวอย่าง: "2025-12-13 11:56:13" -> "2025-12-13T11:56:13+07:00"
+      // ตัวอย่าง: "2026-12-13 11:56:13" -> "2026-12-13T11:56:13+07:00"
       const isoString = dateString.replace(' ', 'T') + '+07:00'
       date = new Date(isoString)
     } else if (dateString.includes('T')) {
@@ -61,11 +61,11 @@ export const formatThaiDateTime = (
   
   let date: Date
   
-  // ถ้าเป็น MySQL datetime format (2025-12-13 11:56:13)
+  // ถ้าเป็น MySQL datetime format (2026-12-13 11:56:13)
   // ให้ parse โดยตรงแล้วสร้าง Date object โดยใช้ค่าเวลาโดยตรง
   if (typeof dateString === 'string' && /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(dateString)) {
     // Parse MySQL datetime string โดยตรง
-    // ตัวอย่าง: "2025-12-13 11:56:13"
+    // ตัวอย่าง: "2026-12-13 11:56:13"
     // เวลาจาก DB เป็นเวลาไทย (UTC+7) อยู่แล้ว
     const [datePart, timePart] = dateString.split(' ')
     const [year, month, day] = datePart.split('-').map(Number)

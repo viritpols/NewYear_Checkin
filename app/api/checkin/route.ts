@@ -132,7 +132,7 @@ export async function POST(request: NextRequest) {
       
       // ตรวจสอบ cookie
       const cookieStore = await cookies()
-      const existingDeviceCookie = cookieStore.get('ny2025_device')
+      const existingDeviceCookie = cookieStore.get('ny2026_device')
       
       // ตรวจสอบว่า device นี้เคยเช็คอินไปแล้วหรือไม่ (ไม่ว่าจะเป็นรหัสพนักงานไหน)
       // วิธีที่ 1: ตรวจสอบจาก cookie
@@ -302,7 +302,7 @@ export async function POST(request: NextRequest) {
     // ตั้งค่า HttpOnly cookie เพื่อล็อก device (ช่วยกันล้าง localStorage)
     if (deviceId) {
       try {
-        response.cookies.set('ny2025_device', deviceId, {
+        response.cookies.set('ny2026_device', deviceId, {
           httpOnly: true,
           sameSite: 'lax',
           secure: true,

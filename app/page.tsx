@@ -566,7 +566,7 @@ function HomeContent() {
             <div className="flex items-center justify-center gap-2 mb-4">
               <Sparkles className="w-6 h-6 text-blue-400 animate-pulse" />
               <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent mb-2">
-                งานปีใหม่ 2025
+                งานปีใหม่ 2026
             </h1>
               <Sparkles className="w-6 h-6 text-blue-400 animate-pulse" />
             </div>
@@ -867,12 +867,12 @@ function HomeContent() {
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-500"></div>
                 <h3 className="font-semibold text-blue-400 mb-4 flex items-center text-lg">
                   <span className="mr-2">ℹ️</span>
-                  ข้อมูลงานปีใหม่ 2025
+                  ข้อมูลงานปีใหม่ 2026
                 </h3>
                 <ul className="space-y-3 text-gray-300">
                   <li className="flex items-start group">
                     <span className="mr-3 text-blue-400">📅</span>
-                    <span className="group-hover:text-white transition-colors">วันที่: 20 ธันวาคม 2025</span>
+                    <span className="group-hover:text-white transition-colors">วันที่: 20 ธันวาคม 2026</span>
                   </li>
                       <li className="flex items-start group">
                         <span className="mr-3 text-cyan-400">🕐</span>
