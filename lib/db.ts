@@ -3,14 +3,14 @@ import mysql from 'mysql2/promise'
 // Database connection configuration
 // ปรับให้รองรับ concurrent requests มากๆ (100+ users)
 const dbConfig = {
-  host: process.env.DB_HOST || '192.168.40.15',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'gp25095',
-  database: process.env.DB_NAME || 'NYCheckin',
-  port: parseInt(process.env.DB_PORT || '3800', 10),
+  host: process.env.DB_HOST ,
+  user: process.env.DB_USER ,
+  password: process.env.DB_PASSWORD ,
+  database: process.env.DB_NAME ,
+  port: parseInt(process.env.DB_PORT ?? '3306'),
   waitForConnections: true,
-  connectionLimit: parseInt(process.env.DB_CONNECTION_LIMIT || '150', 10), // เพิ่มเป็น 150 สำหรับ 100+ concurrent
-  queueLimit: parseInt(process.env.DB_QUEUE_LIMIT || '200', 10), // อนุญาตให้ queue ได้ 200 requests
+  connectionLimit: parseInt(process.env.DB_CONNECTION_LIMIT ?? '150', 10), // เพิ่มเป็น 150 สำหรับ 100+ concurrent
+  queueLimit: parseInt(process.env.DB_QUEUE_LIMIT ?? '200', 10), // อนุญาตให้ queue ได้ 200 requests
   enableKeepAlive: true,
   keepAliveInitialDelay: 0,
   // mysql2 ไม่มี acquireTimeout option - connection pool จะรอตาม queueLimit
