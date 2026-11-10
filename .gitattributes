@@ -1,0 +1,3 @@
+# shell scripts + Dockerfile ต้องเป็น LF สำหรับรันบน Ubuntu server
+*.sh text eol=lf
+Dockerfile text eol=lf

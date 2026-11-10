@@ -1,0 +1,87 @@
+# CI — รันอัตโนมัติเมื่อเปิด/อัปเดต Pull Request และเมื่อ push เข้า main
+# ชื่อ job "newyear-checkin-ci" คือชื่อ status check ที่ใช้เลือกใน Branch protection
+#
+# ⚠️ ไม่ใช้ external action เลย (ไม่มี uses:) — ตั้งใจ (เหมือน wms-frontend):
+#    org GP-Mobility ตั้ง policy "all actions must be from a repository owned by GP-Mobility"
+#    → actions/checkout@v4, actions/setup-node@v4 ถูกบล็อก (Startup failure)
+#    จึง checkout เองด้วย git init + fetch และใช้ Node ที่ติดมากับ runner
+#    (ย้าย repo เข้า org เมื่อไรก็ใช้ได้ทันทีไม่ต้องแก้)
+#
+# หมายเหตุ: GitHub "ไม่ build image" — image ถูก build บนเครื่องในออฟฟิศ
+# แล้ว push เข้า local registry (ดู deploy/build-push-local.sh)
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# push ใหม่บน branch เดิม → ยกเลิกรอบเก่าที่ยังวิ่งอยู่ (ประหยัดเวลา)
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  newyear-checkin-ci:
+    name: newyear-checkin-ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      # checkout เอง (ไม่พึ่ง actions/checkout ที่ถูก policy บล็อก)
+      # PR → ใช้ merge ref (โค้ดเสมือน merge แล้ว) / push → ใช้ sha ตรงๆ
+      - name: Checkout (no external actions)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git init .
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            git fetch --depth 1 origin "refs/pull/${{ github.event.number }}/merge"
+          else
+            git fetch --depth 1 origin "${{ github.sha }}"
+          fi
+          git checkout --detach FETCH_HEAD
+
+      # ใช้ Node ที่ติดมากับ ubuntu runner (>= 20 — ครอบขั้นต่ำ Next 14 ที่ 18.17)
+      - name: Node version
+        run: node --version && npm --version
+
+      # Secret scan (hard gate) — กัน private key / cloud key หลุดเข้า repo
+      # จับเฉพาะ pattern อันตรายจริง (false-positive ต่ำ) ยกเว้นไฟล์ *.example / lockfile
+      - name: Secret scan
+        run: |
+          if git grep -nE 'BEGIN (RSA |OPENSSH |EC |DSA )?PRIVATE KEY|AKIA[0-9A-Z]{16}|xox[baprs]-[0-9A-Za-z-]{10,}' \
+               -- ':!*.example' ':!package-lock.json'; then
+            echo "::error::พบ secret/private key ในไฟล์ที่ track — ห้าม commit (ย้ายไป .env / secret store)"
+            exit 1
+          fi
+          echo "secret scan OK"
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Type check (hard gate)
+      # ⚠️ ต้องสร้าง next-env.d.ts ก่อน: เป็นไฟล์ generate (gitignored) ที่ประกาศ ambient types
+      # ของ Next (image import ฯลฯ) — checkout สดไม่มี → tsc อาจ fail ปลอม
+      # (Next 14 ยังไม่มี `next typegen` แบบ wms-frontend จึงเขียนไฟล์ให้ตรงๆ)
+      - name: Type check
+        run: |
+          printf '/// <reference types="next" />\n/// <reference types="next/image-types/global" />\n' > next-env.d.ts
+          npx tsc --noEmit
+
+      # Lint (hard gate) — error = fail, warning ไม่ block
+      - name: Lint
+        run: npm run lint
+
+      # Build (hard gate) — next build คือ gate จริง: จับ build-break / import พัง /
+      # syntax เสีย ก่อนถึง production
+      # DB_* / QR_SECRET อ่านตอน "รัน" เท่านั้น (ไม่ bake) → ตอน build ไม่ต้องมีค่า
+      - name: Build (next build)
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+          NODE_OPTIONS: --max-old-space-size=4096
+        run: npm run build
+
+      # Security audit — informational เท่านั้น (ไม่ block)
+      - name: Security audit (informational)
+        run: npm audit --audit-level=high || true

@@ -7,32 +7,38 @@ yarn-error.log*
 # Next.js
 .next
 out
+dist
 build
 
-# Environment files
-.env
-.env.local
-.env*.local
+# Testing
+coverage
+.nyc_output
 
-# IDE
+# Misc
+.DS_Store
+Thumbs.db
+*.pem
 .vscode
 .idea
 *.swp
 *.swo
 *~
-
-# OS
-.DS_Store
-Thumbs.db
+.cache
+.turbo
+logs
+*.log
 
 # Git
 .git
 .gitignore
+.gitattributes
 
-# Docker
-docker-compose.yml
-Dockerfile
-.dockerignore
+# secrets / env — ห้าม bake เข้า image (ค่า DB/QR_SECRET อ่านจาก .env ของ server ตอนรัน)
+.env
+.env.*
+env.docker.example
+gitkey
+gitkey.pub
 
 # Documentation
 *.md
@@ -41,15 +47,11 @@ Dockerfile
 # Scripts (not needed in production)
 scripts
 
-# Logs
-logs
-*.log
-
-# Testing
-coverage
-.nyc_output
-
-# Misc
-.cache
-.turbo
-
+# Docker / CI / nginx — ไม่ต้อง bake เข้า image
+Dockerfile
+docker-compose*.yml
+docker-compose*.example
+.dockerignore
+.github
+deploy
+nginx
