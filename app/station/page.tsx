@@ -77,6 +77,7 @@ export default function StationPage() {
     // เช็คอินสำเร็จ หรือเคยเช็คอินแล้ว
     setCheckedIn(true)
     
+    /* ปิดระบบสุ่มรางวัลชั่วคราว
     // เช็ค rewardid: null = ยังไม่สุ่ม, 0 = สุ่มแล้วแต่ไม่ได้รับ, >0 = ได้รับรางวัล
     const rewardid = data.rewardid
     let rewardName = ''
@@ -90,16 +91,17 @@ export default function StationPage() {
       rewardName = data.reward?.name || ''
       rewardAddon = data.reward?.addon || ''
     }
-    
+    */
     setEmployeeData({
       staffid: data.staffid,
       name: data.name,
-      reward: rewardName,
-      addon: rewardAddon,
+      reward: '', // rewardName, (ปิดระบบสุ่มรางวัลชั่วคราว)
+      addon: '',  // rewardAddon,
       checkinTime: new Date().toISOString()
     })
     setUserGroup(data.group || null)
-    
+
+    /* ปิดระบบสุ่มรางวัลชั่วคราว
     // ถ้ามี rewardid (ไม่ว่าจะเป็น 0 หรือ >0) แสดงว่าเคยสุ่มแล้ว ไม่ต้องแสดง animation
     if (rewardid !== null && rewardid !== undefined) {
       setHasShownAnimation(true)
@@ -124,6 +126,7 @@ export default function StationPage() {
           })
       }
     }
+    */
   }
 
   const handleSpinReward = async () => {
@@ -399,7 +402,7 @@ export default function StationPage() {
                 </div>
               </div>
 
-              {/* Reward Animation */}
+              {/* Reward Animation 
               {showRewardAnimation && allRewards.length > 0 && (
                 <div className="mb-6">
                   <RewardAnimation
@@ -424,7 +427,7 @@ export default function StationPage() {
                 </div>
               )}
 
-              {/* Reward Display หรือ Spin Button */}
+              {/* Reward Display หรือ Spin Button 
               {(employeeData.reward || hasSpun) ? (
                 // แสดงรางวัลที่ได้รับ หรือข้อความรางวัลหมด
                 !showRewardAnimation && (
@@ -446,14 +449,14 @@ export default function StationPage() {
                   ) : (
                     // ได้รางวัล
                     <div className="reward-container reward-glow bg-gradient-to-r from-yellow-900/40 via-orange-900/40 to-yellow-900/40 rounded-xl p-8 mb-6 border-2 border-yellow-500/50 backdrop-blur-sm relative overflow-hidden">
-                      {/* Animated background shimmer */}
+                      {/* Animated background shimmer 
                       <div className="absolute inset-0 reward-shimmer rounded-xl"></div>
                       
-                      {/* Glowing border effect */}
+                      {/* Glowing border effect 
                       <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-yellow-500/20 animate-pulse"></div>
                       
                       <div className="relative z-10">
-                        {/* Header with animated gift */}
+                        {/* Header with animated gift 
                         <div className="flex items-center justify-center gap-4 mb-4">
                           <div className="text-5xl">🎁</div>
                           <h3 className="text-3xl font-bold text-transparent bg-gradient-to-r from-yellow-300 via-orange-300 to-yellow-300 bg-clip-text">
@@ -461,17 +464,17 @@ export default function StationPage() {
                           </h3>
                         </div>
                         
-                        {/* Reward message */}
+                        {/* Reward message 
                         <p className="text-yellow-200 text-xl font-semibold mb-4 text-center">
                           คุณได้รับรางวัล
                         </p>
                         
-                        {/* Reward display */}
+                        {/* Reward display 
                         <div className="bg-gradient-to-r from-yellow-900/50 via-orange-900/50 to-yellow-900/50 rounded-xl p-6 border-2 border-yellow-400/50 relative overflow-hidden">
                           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-400/10 to-transparent animate-pulse"></div>
                           <div className="relative z-10">
                             <div className="flex flex-col items-center justify-center gap-3">
-                              {/* รางวัลหลัก */}
+                              {/* รางวัลหลัก 
                               <div className="flex items-center justify-center gap-2">
                                 <span className="text-2xl">🏆</span>
                                 <p className="text-yellow-200 text-2xl font-bold">
@@ -492,7 +495,7 @@ export default function StationPage() {
                     <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-purple-500/10 animate-pulse"></div>
                     
                     <div className="relative z-10 text-center">
-                      {/* Error Message */}
+                      {/* Error Message   
                       {rewardError && (
                         <div className="bg-red-900/30 border-2 border-red-500/50 rounded-xl p-4 mb-4 backdrop-blur-sm flex items-start">
                           <AlertCircle className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5 text-red-400" />

@@ -149,7 +149,7 @@ function HomeContent() {
           if (data.checkedIn !== undefined) {
             setCheckedIn(data.checkedIn)
           }
-          
+          {}
           // ถ้ามีข้อมูล check-in แล้ว ให้โหลดสถานะล่าสุด
           if (data.staffid) {
             // เช็ค rewardid: null = ยังไม่สุ่ม, 0 = สุ่มแล้วแต่ไม่ได้รับ, >0 = ได้รับรางวัล
@@ -313,7 +313,7 @@ function HomeContent() {
         return
       }
     }
-    
+    {/*
     // เช็ค rewardid จาก API response: null = ยังไม่สุ่ม, 0 = สุ่มแล้วแต่ไม่ได้รับ, >0 = ได้รับรางวัล
     const rewardid = data.rewardid
     let rewardName = ''
@@ -348,14 +348,14 @@ function HomeContent() {
       }
       setHasSpun(true) // เคยสุ่มแล้ว ไม่ให้สุ่มซ้ำ
       setHasShownAnimation(true) // แสดงรางวัลทันที ไม่ต้องแสดง animation
-    }
-    
+    } 
+    */}
     // ตั้งค่า employeeData
     setEmployeeData({
       staffid: data.staffid,
       name: data.name,
-      reward: rewardName,
-      addon: rewardAddon,
+      reward: '', // rewardName, (ปิดระบบสุ่มรางวัลชั่วคราว)
+      addon: '',  // rewardAddon,
       checkinTime: new Date().toISOString()
     })
     
@@ -699,7 +699,7 @@ function HomeContent() {
                   </div>
                 </div>
 
-                {/* Reward Animation */}
+                {/* Reward Animation 
                 {showRewardAnimation && allRewards.length > 0 && (
                   <div className="mb-6">
                     <RewardAnimation
@@ -724,7 +724,7 @@ function HomeContent() {
                   </div>
                 )}
 
-                {/* Reward Display หรือ Spin Button */}
+                {/* Reward Display หรือ Spin Button 
                 {(employeeData.reward || hasSpun) ? (
                   // แสดงรางวัลที่ได้รับ หรือข้อความรางวัลหมด
                   !showRewardAnimation && (
@@ -746,20 +746,20 @@ function HomeContent() {
                     ) : (
                       // ได้รางวัล - แสดงรางวัลที่ได้ไปแล้ว
                       <div className="reward-container reward-glow bg-gradient-to-r from-yellow-900/40 via-orange-900/40 to-yellow-900/40 rounded-xl p-8 mb-6 border-2 border-yellow-500/50 backdrop-blur-sm relative overflow-hidden">
-                        {/* Animated background shimmer */}
+                        {/* Animated background shimmer 
                         <div className="absolute inset-0 reward-shimmer rounded-xl"></div>
                         
-                        {/* Sparkle effects */}
+                        {/* Sparkle effects 
                         <div className="absolute top-4 left-4 w-3 h-3 bg-yellow-400 rounded-full sparkle sparkle-delay-1"></div>
                         <div className="absolute top-8 right-8 w-2 h-2 bg-orange-400 rounded-full sparkle sparkle-delay-2"></div>
                         <div className="absolute bottom-6 left-8 w-2.5 h-2.5 bg-yellow-300 rounded-full sparkle sparkle-delay-3"></div>
                         <div className="absolute bottom-4 right-4 w-3 h-3 bg-orange-300 rounded-full sparkle"></div>
                         
-                        {/* Glowing border effect */}
+                        {/* Glowing border effect 
                         <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-yellow-500/20 animate-pulse"></div>
                         
                         <div className="relative z-10">
-                          {/* Header with animated gift */}
+                          {/* Header with animated gift
                           <div className="flex items-center justify-center gap-4 mb-4">
                             <div className="relative">
                               <div className="gift-icon text-5xl">🎁</div>
@@ -771,17 +771,17 @@ function HomeContent() {
                             </h3>
                           </div>
                           
-                          {/* Reward message */}
+                          {/* Reward message 
                           <p className="text-yellow-200 text-xl font-semibold mb-4 text-center">
                             คุณได้รับรางวัล
                           </p>
                           
-                          {/* Reward display with animation */}
+                          {/* Reward display with animation 
                           <div className="bg-gradient-to-r from-yellow-900/50 via-orange-900/50 to-yellow-900/50 rounded-xl p-6 border-2 border-yellow-400/50 relative overflow-hidden mb-4">
                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-400/10 to-transparent animate-pulse"></div>
                             <div className="relative z-10">
                               <div className="flex flex-col items-center justify-center gap-3">
-                                {/* รางวัลหลัก */}
+                                {/* รางวัลหลัก 
                                 <div className="flex items-center justify-center gap-2">
                                   <span className="text-2xl sparkle">🏆</span>
                                   <p className="text-yellow-200 text-2xl font-bold">
@@ -789,7 +789,7 @@ function HomeContent() {
                                   </p>
                                   <span className="text-2xl sparkle sparkle-delay-1">🎉</span>
                                 </div>
-                                {/* รางวัลเสริม (ถ้ามี) */}
+                                {/* รางวัลเสริม (ถ้ามี) 
                                 {employeeData.addon && (
                                   <div className="flex items-center justify-center gap-2 mt-2">
                                     <span className="text-xl">➕</span>
@@ -807,7 +807,7 @@ function HomeContent() {
                             <p className="text-yellow-300/90 text-sm text-center font-medium">
                               ✨ กรุณาแสดงหน้านี้ต่อเจ้าหน้าที่เพื่อรับรางวัล ✨
                             </p>
-                          </div>*/}
+                          </div>
                         </div>
                       </div>
                     )
@@ -818,7 +818,7 @@ function HomeContent() {
                       <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-purple-500/10 animate-pulse"></div>
                       
                       <div className="relative z-10 text-center">
-                        {/* Error Message */}
+                        {/* Error Message 
                         {rewardError && (
                           <div className="bg-red-900/30 border-2 border-red-500/50 rounded-xl p-4 mb-4 backdrop-blur-sm flex items-start">
                             <AlertCircle className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5 text-red-400" />
@@ -852,7 +852,7 @@ function HomeContent() {
                         </p>
                       </div>
                     </div>
-                )}
+                )} */}
 
                 <p className="text-gray-400 mt-4">
                   ขอให้สนุกกับงานปีใหม่นะครับ! 🎆
