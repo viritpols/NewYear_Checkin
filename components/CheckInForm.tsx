@@ -313,21 +313,21 @@ export default function CheckInForm({ onSubmit }: CheckInFormProps) {
   // ถ้าเป็น incognito mode แสดงข้อความเตือน
   if (isIncognito) {
     return (
-      <div className="bg-red-900/30 border-2 border-red-500/50 rounded-2xl shadow-2xl p-8 backdrop-blur-xl relative overflow-hidden">
+      <div className="card-cream border-copper-400/50 rounded-2xl p-8 relative overflow-hidden">
         <div className="text-center">
-          <AlertCircle className="w-16 h-16 text-red-400 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-red-400 mb-2">
+          <AlertCircle className="w-16 h-16 text-copper-500 mx-auto mb-4" />
+          <h2 className="text-2xl font-serif-thai font-bold text-copper-600 mb-2">
             ไม่สามารถใช้งานได้
           </h2>
-          <p className="text-red-200 mb-2">
+          <p className="text-ink/80 mb-2">
             ตรวจพบว่าคุณกำลังใช้โหมดไม่ระบุตัวตน (Incognito/Private Mode)
           </p>
-          <p className="text-sm text-red-300 mb-4">
+          <p className="text-sm text-ink/60 mb-4">
             เพื่อป้องกันการเช็คอินซ้ำ กรุณาปิดโหมดไม่ระบุตัวตนและใช้โหมดปกติ
           </p>
-          <div className="bg-red-900/40 border border-red-500/50 rounded-lg p-4 text-left">
-            <p className="text-red-300 text-sm font-semibold mb-2">วิธีแก้ไข:</p>
-            <ul className="text-red-200 text-xs space-y-1 list-disc list-inside">
+          <div className="bg-copper-300/10 border border-copper-400/40 rounded-lg p-4 text-left">
+            <p className="text-copper-700 text-sm font-semibold mb-2">วิธีแก้ไข:</p>
+            <ul className="text-ink/75 text-xs space-y-1 list-disc list-inside">
               <li>ปิดแท็บ/หน้าต่างโหมดไม่ระบุตัวตน</li>
               <li>เปิดเบราว์เซอร์ในโหมดปกติ</li>
               <li>สแกน QR code อีกครั้ง</li>
@@ -341,16 +341,16 @@ export default function CheckInForm({ onSubmit }: CheckInFormProps) {
   // ถ้า device เช็คอินแล้ว แสดงข้อความเตือน
   if (deviceAlreadyCheckedIn) {
     return (
-      <div className="bg-red-900/30 border-2 border-red-500/50 rounded-2xl shadow-2xl p-8 backdrop-blur-xl relative overflow-hidden">
+      <div className="card-cream border-copper-400/50 rounded-2xl p-8 relative overflow-hidden">
         <div className="text-center">
-          <AlertCircle className="w-16 h-16 text-red-400 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-red-400 mb-2">
+          <AlertCircle className="w-16 h-16 text-copper-500 mx-auto mb-4" />
+          <h2 className="text-2xl font-serif-thai font-bold text-copper-600 mb-2">
             ไม่สามารถเช็คอินได้
           </h2>
-          <p className="text-red-200 mb-4">
+          <p className="text-ink/80 mb-4">
             เครื่องมือถือนี้ได้ทำการเช็คอินไปแล้ว
           </p>
-          <p className="text-sm text-red-300">
+          <p className="text-sm text-ink/60">
             กรุณาใช้เครื่องมือถืออื่นหรือติดต่อเจ้าหน้าที่
           </p>
         </div>
@@ -359,20 +359,19 @@ export default function CheckInForm({ onSubmit }: CheckInFormProps) {
   }
 
   return (
-    <div className="bg-gray-900/80 backdrop-blur-xl rounded-2xl shadow-2xl p-8 border border-blue-500/30 relative overflow-hidden">
+    <div className="card-cream rounded-2xl p-8 relative overflow-hidden">
       {/* Glowing border effect */}
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-blue-500/10 opacity-50 blur-xl"></div>
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
+      <div className="absolute top-0 left-0 right-0 h-[2px] brass-rule"></div>
       
       <div className="relative z-10">
       <div className="mb-6">
           <div className="flex items-center gap-2 mb-2">
-            <Sparkles className="w-5 h-5 text-blue-400" />
-            <h2 className="text-2xl font-bold text-transparent bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text">
+            <Sparkles className="w-5 h-5 text-brass-500" />
+            <h2 className="text-2xl font-serif-thai font-bold text-brass">
           เช็คอินเข้างาน
         </h2>
           </div>
-          <p className="text-gray-400">
+          <p className="text-ink/60">
           กรุณากรอกข้อมูลของคุณเพื่อเช็คอินเข้างานปีใหม่
         </p>
       </div>
@@ -380,12 +379,12 @@ export default function CheckInForm({ onSubmit }: CheckInFormProps) {
       <form onSubmit={handleSubmit} className="space-y-6">
           {/* Staff ID Field */}
         <div>
-            <label htmlFor="staffid" className="block text-sm font-semibold text-gray-300 mb-2">
-              รหัสพนักงาน <span className="text-red-400">*</span>
+            <label htmlFor="staffid" className="block text-sm font-semibold text-ink/80 mb-2">
+              รหัสพนักงาน <span className="text-copper-500">*</span>
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Hash className="h-5 w-5 text-blue-400/70" />
+                <Hash className="h-5 w-5 text-brass-500" />
             </div>
             <input
               type="text"
@@ -396,26 +395,26 @@ export default function CheckInForm({ onSubmit }: CheckInFormProps) {
                 maxLength={6}
                 inputMode="numeric"
                 pattern="[0-9]*"
-                className={`block w-full pl-10 pr-10 py-3 bg-gray-800/50 border ${
+                className={`block w-full pl-10 pr-10 py-3 input-cream ${
                   errors.staffid 
-                    ? 'border-red-500/50 focus:border-red-500 focus:ring-red-500/50' 
-                    : 'border-blue-500/30 focus:border-blue-500 focus:ring-blue-500/50'
-                } rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:outline-none transition-all`}
+                    ? '!border-copper-400' 
+                    : ''
+                } rounded-lg focus:outline-none transition-all`}
                 placeholder="กรอกรหัสพนักงาน 5-6 หลัก #64005"
               />
               {isSearching && (
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                  <Loader2 className="w-4 h-4 text-blue-400 animate-spin" />
+                  <Loader2 className="w-4 h-4 text-brass-500 animate-spin" />
                 </div>
               )}
               {formData.staffid && !errors.staffid && !isSearching && formData.staffid.length >= 5 && (
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                  <CheckCircle2 className="w-4 h-4 text-green-400" />
+                  <CheckCircle2 className="w-4 h-4 text-patina-500" />
                 </div>
               )}
           </div>
             {errors.staffid && (
-              <p className="mt-1 text-sm text-red-400 flex items-center gap-1">
+              <p className="mt-1 text-sm text-copper-600 flex items-center gap-1">
                 <span>⚠️</span>
                 {errors.staffid}
               </p>
@@ -424,12 +423,12 @@ export default function CheckInForm({ onSubmit }: CheckInFormProps) {
 
         {/* Name Field */}
         <div>
-            <label htmlFor="name" className="block text-sm font-semibold text-gray-300 mb-2">
-              ชื่อ-นามสกุล <span className="text-red-400">*</span>
+            <label htmlFor="name" className="block text-sm font-semibold text-ink/80 mb-2">
+              ชื่อ-นามสกุล <span className="text-copper-500">*</span>
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <User className="h-5 w-5 text-cyan-400/70" />
+                <User className="h-5 w-5 text-patina-500" />
             </div>
             <input
               type="text"
@@ -437,21 +436,21 @@ export default function CheckInForm({ onSubmit }: CheckInFormProps) {
               name="name"
               value={formData.name}
               onChange={handleChange}
-                className={`block w-full pl-10 pr-3 py-3 bg-gray-800/50 border ${
+                className={`block w-full pl-10 pr-3 py-3 input-cream ${
                   errors.name 
-                    ? 'border-red-500/50 focus:border-red-500 focus:ring-red-500/50' 
-                    : 'border-cyan-500/30 focus:border-cyan-500 focus:ring-cyan-500/50'
-                } rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:outline-none transition-all`}
+                    ? '!border-copper-400' 
+                    : ''
+                } rounded-lg focus:outline-none transition-all`}
               placeholder="เช่น สมชาย ใจดี"
             />
               {formData.name && !errors.name && (
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                  <div className="w-2 h-2 bg-patina-400 rounded-full animate-pulse"></div>
                 </div>
               )}
             </div>
             {errors.name && (
-              <p className="mt-1 text-sm text-red-400 flex items-center gap-1">
+              <p className="mt-1 text-sm text-copper-600 flex items-center gap-1">
                 <span>⚠️</span>
                 {errors.name}
               </p>
@@ -460,22 +459,22 @@ export default function CheckInForm({ onSubmit }: CheckInFormProps) {
 
           {/* Error Message */}
           {errors.submit && (
-            <div className="bg-red-900/30 border border-red-500/50 rounded-lg p-4 flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+            <div className="bg-copper-300/10 border border-copper-400/50 rounded-lg p-4 flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-copper-500 flex-shrink-0 mt-0.5" />
               <div>
-                <p className="text-sm text-red-400 font-medium">เกิดข้อผิดพลาด</p>
-                <p className="text-xs text-red-300 mt-1">{errors.submit}</p>
+                <p className="text-sm text-copper-600 font-medium">เกิดข้อผิดพลาด</p>
+                <p className="text-xs text-ink/70 mt-1">{errors.submit}</p>
               </div>
             </div>
           )}
 
           {/* Success Message */}
           {submitSuccess && (
-            <div className="bg-green-900/30 border border-green-500/50 rounded-lg p-4 flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+            <div className="bg-patina-50 border border-patina-300 rounded-lg p-4 flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-patina-500 flex-shrink-0 mt-0.5" />
               <div>
-                <p className="text-sm text-green-400 font-medium">เช็คอินสำเร็จ!</p>
-                <p className="text-xs text-green-300 mt-1">กำลังบันทึกข้อมูล...</p>
+                <p className="text-sm text-patina-700 font-medium">เช็คอินสำเร็จ!</p>
+                <p className="text-xs text-patina-600 mt-1">กำลังบันทึกข้อมูล...</p>
               </div>
         </div>
           )}
@@ -484,7 +483,7 @@ export default function CheckInForm({ onSubmit }: CheckInFormProps) {
         <button
           type="submit"
             disabled={isSubmitting || submitSuccess}
-            className="w-full bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:via-blue-400 hover:to-cyan-400 disabled:from-gray-600 disabled:via-gray-600 disabled:to-gray-600 disabled:cursor-not-allowed text-white font-semibold py-4 px-6 rounded-lg shadow-lg shadow-blue-500/50 hover:shadow-xl hover:shadow-blue-500/70 transition-all duration-200 flex items-center justify-center space-x-2 relative overflow-hidden group"
+            className="w-full btn-brass disabled:cursor-not-allowed font-semibold text-lg py-4 px-6 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2 relative overflow-hidden group"
         >
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
             {isSubmitting ? (
@@ -506,11 +505,11 @@ export default function CheckInForm({ onSubmit }: CheckInFormProps) {
         </button>
       </form>
 
-        <div className="mt-6 pt-6 border-t border-blue-500/20">
-          <p className="text-xs text-gray-500 text-center flex items-center justify-center gap-2">
-            <span className="w-1 h-1 bg-blue-400 rounded-full"></span>
+        <div className="mt-6 pt-6 border-t border-brass-400/25">
+          <p className="text-xs text-ink/50 text-center flex items-center justify-center gap-2">
+            <span className="w-1 h-1 bg-brass-400 rounded-full"></span>
           ข้อมูลของคุณจะถูกบันทึกเพื่อการเข้างานเท่านั้น
-            <span className="w-1 h-1 bg-blue-400 rounded-full"></span>
+            <span className="w-1 h-1 bg-brass-400 rounded-full"></span>
         </p>
         </div>
       </div>

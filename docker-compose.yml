@@ -16,6 +16,7 @@ services:
       - DB_NAME=${DB_NAME:-NYCheckin}
       - DB_PORT=${DB_PORT:-3800}
       - QR_SECRET=${QR_SECRET:-your-secret-key-change-this}
+      - ADMIN_KEY=${ADMIN_KEY:-}
       - PORT=4101
     ports:
       - "${APP_PORT:-4101}:4101"

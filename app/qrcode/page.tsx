@@ -5,14 +5,15 @@ import { RefreshCw, Clock3, Link as LinkIcon, QrCode, Brain, Cpu, Zap } from 'lu
 
 const FIVE_MINUTES = 5 * 60 * 1000
 
-// Microsoft Edge inspired colors
+// ธีม 2027 "Choices That Matter": ทองเหลือง / สนิมทองแดง / ทองแดง
+// (ชื่อ key เดิมคงไว้ เพื่อไม่ต้องไล่แก้ทุกจุด: blue = ทองเหลือง, cyan = สนิมทองแดง, purple = ทองแดง)
 const EDGE_COLORS = {
-  blue: '#0078D4',
-  cyan: '#00BCF2',
-  purple: '#6B5AED',
-  blueLight: '#1A86FF',
-  cyanLight: '#00D9FF',
-  purpleLight: '#8B7AFF'
+  blue: '#B8954A',       // brass
+  cyan: '#6BAA8E',       // patina / copper oxide
+  purple: '#B8693D',     // copper
+  blueLight: '#E6CF94',  // light brass
+  cyanLight: '#8CC3A9',  // light patina
+  purpleLight: '#E2A07A' // light copper
 }
 
 // Cute AI Character Icon Component (Microsoft Edge inspired)
@@ -638,7 +639,8 @@ export default function QrCodePage() {
   }, [expiresAt, currentTime])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-blue-950 text-white relative overflow-hidden">
+    <div className="min-h-screen bg-ceremony text-ink relative overflow-hidden">
+      <div className="absolute inset-0 ceremony-rays pointer-events-none"></div>
       {/* Celebration Animations */}
       <ConfettiCelebration />
       <SparklesCelebration />
@@ -647,54 +649,29 @@ export default function QrCodePage() {
       
       {/* AI Background Effects */}
       <AIParticles />
-      <CircuitPattern />
+      {/* <CircuitPattern /> ปิดลายวงจร (ไม่เข้ากับธีมใหม่) */}
       
+      {/* โลโก้ GP มุมขวาล่าง แบบจางๆ (40%) */}
+      <img
+        src="/GP.png"
+        alt="GP Mobility"
+        className="fixed bottom-6 right-6 h-14 w-auto object-contain opacity-40 pointer-events-none select-none z-20"
+        style={{ maxWidth: '200px' }}
+      />
+
       <div className="max-w-3xl mx-auto px-4 py-10 relative z-10">
-        {/* GP Autoparts Logo */}
-        <div className="flex justify-center mb-8">
-          <div className="relative group">
-            {/* Glow effect */}
-            <div 
-              className="absolute inset-0 rounded-2xl blur-2xl opacity-40 group-hover:opacity-60 transition-opacity duration-300"
-              style={{
-                background: `linear-gradient(to right, ${EDGE_COLORS.blue}66, ${EDGE_COLORS.cyan}66, ${EDGE_COLORS.purple}66)`,
-                top: '-10px',
-                left: '-10px',
-                right: '-10px',
-                bottom: '-10px'
-              }}
-            />
-            {/* Logo container with border */}
-            <div 
-              className="relative bg-white/5 backdrop-blur-sm rounded-2xl p-4 border"
-              style={{
-                borderColor: `${EDGE_COLORS.blue}40`
-              }}
-            >
-              <img 
-                src="/GP.png" 
-                alt="GP Autoparts Logo" 
-                className="h-20 w-auto object-contain drop-shadow-2xl transition-transform duration-300 group-hover:scale-105"
-                style={{ maxWidth: '250px' }}
-              />
-            </div>
-            {/* Pulse ring */}
-            <div 
-              className="absolute inset-0 rounded-2xl border-2 animate-pulse"
-              style={{
-                borderColor: `${EDGE_COLORS.cyan}40`,
-                top: '-5px',
-                left: '-5px',
-                right: '-5px',
-                bottom: '-5px'
-              }}
-            />
-          </div>
+        {/* หัวเรื่องแบบ "Choices That Matter" */}
+        <div className="text-center mb-8">
+          <p className="font-display text-2xl tracking-[0.35em] pl-[0.35em] text-patina-500">CHOICES</p>
+          <p className="font-display font-semibold text-5xl md:text-6xl leading-tight tracking-wide text-brass">THAT MATTER</p>
+          <p className="font-serif-thai font-semibold text-2xl text-brass mt-1">ทางเลือกที่มีความหมาย</p>
+          <p className="font-serif-thai italic text-sm text-ink/55 mt-2">New Year&apos;s Party Celebration</p>
+          <p className="font-display font-bold text-5xl text-brass">2027</p>
         </div>
         <div className="flex items-center justify-between mb-6">
           <div className="relative">
             <div className="flex items-center gap-3">
-              <div className="relative">
+              <div className="relative hidden">
                 <AICuteCharacter size={40} className="drop-shadow-lg" />
                 <div 
                   className="absolute inset-0 rounded-full blur-xl animate-ping" 
@@ -709,12 +686,7 @@ export default function QrCodePage() {
                 />
               </div>
               <div>
-                <h1 
-                  className="text-3xl font-bold bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage: `linear-gradient(to right, ${EDGE_COLORS.blue}, ${EDGE_COLORS.cyan}, ${EDGE_COLORS.purple})`
-                  }}
-                >
+                <h1 className="text-3xl font-serif-thai font-bold text-brass">
                   QR สำหรับเช็คอิน
                 </h1>
               </div>
@@ -728,15 +700,7 @@ export default function QrCodePage() {
               fetchToken()
             }}
             disabled={isLoading}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg disabled:from-gray-600 disabled:to-gray-600 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl relative overflow-hidden group"
-            style={{
-              background: isLoading 
-                ? 'linear-gradient(to right, #4b5563, #4b5563)'
-                : `linear-gradient(to right, ${EDGE_COLORS.blue}, ${EDGE_COLORS.cyan})`,
-              boxShadow: isLoading 
-                ? '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
-                : `0 10px 15px -3px ${EDGE_COLORS.blue}80`
-            }}
+            className="btn-brass flex items-center gap-2 px-4 py-2 rounded-lg font-semibold disabled:cursor-not-allowed transition-all relative overflow-hidden group"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
             <RefreshCw className={`w-4 h-4 relative z-10 ${isLoading ? 'animate-spin' : ''}`} />
@@ -745,17 +709,16 @@ export default function QrCodePage() {
         </div>
 
         {error && (
-          <div className="mb-4 bg-red-900/40 border border-red-500/50 rounded-xl p-4 text-red-200 backdrop-blur-sm">
+          <div className="mb-4 bg-copper-300/15 border border-copper-400/50 rounded-xl p-4 text-copper-700 backdrop-blur-sm">
             {error}
           </div>
         )}
 
         <div 
-          className="bg-gray-900/70 border rounded-2xl p-6 shadow-2xl relative overflow-hidden backdrop-blur-xl"
-          style={{ borderColor: `${EDGE_COLORS.blue}33` }}
+          className="card-cream rounded-2xl p-6 relative overflow-hidden"
         >
           {/* AI Background Layers */}
-          <NeuralNetworkBackground />
+          {/* <NeuralNetworkBackground /> ปิดลายเครือข่าย AI (ไม่เข้ากับธีมใหม่) */}
           <AIGlowEffect />
           
           <div className="grid md:grid-cols-1 gap-6 items-center relative z-10">
@@ -781,12 +744,13 @@ export default function QrCodePage() {
                       className="w-64 h-64 relative z-10"
                     />
                   ) : (
-                    <div className="w-64 h-64 flex items-center justify-center text-gray-500 bg-gray-100 rounded-2xl">
+                    <div className="w-64 h-64 flex items-center justify-center text-brass-500 bg-cream-100 rounded-2xl">
                       <QrCode className="w-12 h-12 animate-pulse" />
                     </div>
                   )}
                 </div>
-                {/* Floating AI Characters around QR */}
+                {/* Floating AI Characters around QR (ซ่อนไว้ ไม่เข้ากับธีมใหม่) */}
+                <div className="hidden">
                 <div 
                   className="absolute -top-4 -left-4 w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-sm border animate-bounce" 
                   style={{ 
@@ -830,8 +794,9 @@ export default function QrCodePage() {
                 >
                   <AICuteCharacter size={20} />
                 </div>
+                </div>
               </div>
-              <p className="text-gray-400 text-sm flex items-center gap-2">
+              <p className="font-serif-thai text-ink/70 text-base flex items-center gap-2">
                 <span 
                   className="w-2 h-2 rounded-full animate-pulse"
                   style={{ backgroundColor: EDGE_COLORS.blue }}
@@ -849,7 +814,7 @@ export default function QrCodePage() {
 
             <div className="space-y-4">
               {<div 
-                className="bg-gray-800/60 rounded-xl p-4 border backdrop-blur-sm relative overflow-hidden"
+                className="bg-cream-50/80 rounded-xl p-4 border backdrop-blur-sm relative overflow-hidden"
                 style={{ borderColor: `${EDGE_COLORS.blue}33` }}
               >
                 <div 
@@ -859,7 +824,7 @@ export default function QrCodePage() {
                   }}
                 ></div>
                 <div className="relative z-10">
-                  <p className="text-sm text-gray-400 flex items-center gap-2">
+                  <p className="text-sm text-ink/60 flex items-center gap-2">
                     <LinkIcon 
                       className="w-4 h-4 animate-pulse" 
                       style={{ color: EDGE_COLORS.blue }}
@@ -868,7 +833,7 @@ export default function QrCodePage() {
                   </p>
                   <p 
                     className="text-sm break-all mt-1 font-mono"
-                    style={{ color: `${EDGE_COLORS.cyan}CC` }}
+                    style={{ color: '#3D735D' }}
                   >
                     {qrUrl || 'กำลังสร้าง...'}
                   </p>

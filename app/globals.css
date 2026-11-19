@@ -29,16 +29,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: #f4ead3;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e40af;
+  background: #b8954a;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2563eb;
+  background: #9a7a36;
 }
 
 /* Animation delays */
@@ -53,6 +53,179 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+/* =========================================================
+   ธีม "Choices That Matter" 2027
+   ทองเหลือง (brass) / ทองแดง (copper) / สนิมทองแดง (patina) / ขาวนวล (cream)
+   ========================================================= */
+@layer components {
+  /* พื้นหลังทั้งหน้า: ขาวนวล + หมอกเขียวสนิมทองแดงมุมซ้ายล่าง + แสงทองมุมขวาบน */
+  .bg-ceremony {
+    background-color: #fbf6ea;
+    background-image:
+      radial-gradient(ellipse 60% 45% at 85% 0%, rgba(241, 226, 181, 0.85), transparent 70%),
+      radial-gradient(ellipse 70% 55% at 0% 100%, rgba(140, 195, 169, 0.55), transparent 70%),
+      radial-gradient(ellipse 50% 40% at 100% 85%, rgba(205, 127, 82, 0.16), transparent 70%),
+      linear-gradient(160deg, #fffdf8 0%, #fbf6ea 45%, #eef6f1 100%);
+  }
+
+  /* ลำแสงเฉียงจางๆ แบบในภาพอ้างอิง */
+  .ceremony-rays {
+    background-image: repeating-linear-gradient(
+      115deg,
+      rgba(255, 255, 255, 0) 0px,
+      rgba(255, 255, 255, 0) 70px,
+      rgba(255, 255, 255, 0.55) 90px,
+      rgba(255, 255, 255, 0) 120px
+    );
+    mask-image: radial-gradient(ellipse 80% 60% at 70% 10%, #000 20%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 70% 10%, #000 20%, transparent 75%);
+  }
+
+  /* ตัวอักษรทองเหลืองเงา (ใช้กับหัวเรื่อง) */
+  .text-brass {
+    background-image: linear-gradient(180deg, #e9d49a 0%, #c9a75a 38%, #9a7a36 62%, #c9a75a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 1px 0 rgba(255, 253, 248, 0.9)) drop-shadow(0 2px 6px rgba(122, 95, 40, 0.18));
+  }
+
+  /* ตัวอักษรสนิมทองแดง */
+  .text-patina {
+    background-image: linear-gradient(180deg, #6baa8e 0%, #3d735d 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* การ์ดขาวนวลขอบทองเหลือง */
+  .card-cream {
+    background: rgba(255, 253, 248, 0.82);
+    border: 1px solid rgba(184, 149, 74, 0.35);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 18px 40px -18px rgba(92, 71, 32, 0.28);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  /* เส้นทองเหลืองบนขอบการ์ด */
+  .brass-rule {
+    background-image: linear-gradient(90deg, transparent, #b8954a 20%, #e6cf94 50%, #b8954a 80%, transparent);
+  }
+
+  /* ปุ่มหลัก: ทองเหลือง → ทองแดง */
+  .btn-brass {
+    background-image: linear-gradient(135deg, #d4b46a 0%, #b8954a 45%, #b8693d 100%);
+    color: #fffdf8;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.45) inset, 0 10px 24px -10px rgba(154, 85, 48, 0.65);
+    text-shadow: 0 1px 1px rgba(92, 71, 32, 0.45);
+  }
+  .btn-brass:hover:not(:disabled) {
+    filter: brightness(1.06);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.45) inset, 0 14px 30px -10px rgba(154, 85, 48, 0.75);
+  }
+  .btn-brass:disabled {
+    background-image: none;
+    background-color: #d6cfbf;
+    box-shadow: none;
+  }
+
+  /* ช่องกรอกข้อมูล */
+  .input-cream {
+    background: #fffdf8;
+    border: 1px solid rgba(184, 149, 74, 0.45);
+    color: #2e2b24;
+  }
+  .input-cream::placeholder {
+    color: #a69d8a;
+  }
+  .input-cream:focus {
+    border-color: #4e8f74;
+    box-shadow: 0 0 0 3px rgba(107, 170, 142, 0.25);
+  }
+}
+
+/* พลุเบาๆ หน้าเช็คอิน (components/LightFireworks.tsx)
+   แตกออกใน ~30% แรกของรอบ แล้วเว้นว่างจนกว่าจะถึงรอบถัดไป */
+@keyframes burstParticle {
+  0% {
+    transform: rotate(var(--a)) translateY(0) scale(0.8);
+    opacity: 0;
+  }
+  4% {
+    opacity: 1;
+  }
+  24% {
+    opacity: 0.85;
+  }
+  32% {
+    transform: rotate(var(--a)) translateY(calc(var(--r) * -1)) scale(0.35);
+    opacity: 0;
+  }
+  100% {
+    transform: rotate(var(--a)) translateY(calc(var(--r) * -1)) scale(0.35);
+    opacity: 0;
+  }
+}
+
+@keyframes burstFlash {
+  0% {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+  4% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  16%,
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+.burst-particle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  border-radius: 9999px;
+  opacity: 0;
+  animation-name: burstParticle;
+  animation-timing-function: cubic-bezier(0.15, 0.65, 0.3, 1);
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+.burst-flash {
+  position: absolute;
+  left: -28px;
+  top: -28px;
+  width: 56px;
+  height: 56px;
+  border-radius: 9999px;
+  opacity: 0;
+  animation-name: burstFlash;
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+.falling-particle {
+  opacity: 0;
+  animation-fill-mode: both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .falling-particle,
+  .burst-particle,
+  .burst-flash {
+    animation: none;
+    opacity: 0;
   }
 }
 

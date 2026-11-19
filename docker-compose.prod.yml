@@ -33,6 +33,7 @@ services:
       DB_CONNECTION_LIMIT: ${DB_CONNECTION_LIMIT:-150}
       DB_QUEUE_LIMIT: ${DB_QUEUE_LIMIT:-200}
       QR_SECRET: ${QR_SECRET:?ต้องตั้ง QR_SECRET ใน .env}
+      ADMIN_KEY: ${ADMIN_KEY:-}
       PORT: "4101"
     ports:
       - "${APP_PORT:-4101}:4101"

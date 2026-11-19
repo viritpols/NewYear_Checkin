@@ -12,6 +12,7 @@ import { getHardwareFingerprint } from '@/utils/hardwareFingerprint'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { formatThaiDateTime } from '@/utils/date'
 import RewardAnimation from '@/components/RewardAnimation'
+import LightFireworks, { FallingParticles } from '@/components/LightFireworks'
 
 // 6 สีที่กำหนดไว้สำหรับที่รัดข้อมือ (ใช้ rgba สำหรับ opacity)
 // group 1-6 แมปกับสีตามลำดับ
@@ -514,13 +515,16 @@ function HomeContent() {
   }
 
   // ถ้า token ไม่ผ่าน ให้แสดงหน้าจอบล็อก
-  if (tokenChecked && !tokenValid) {
+  // ยกเว้นเครื่องที่เช็คอินแล้ว: ให้เปิดดูหน้าข้อมูลของตัวเองได้เสมอ
+  // (เช่น สลับแอปแล้วหน้าโหลดใหม่หลัง QR หมดอายุ หรือเปิดลิงก์ไม่มี token)
+  // ต้องรอ device guard โหลดเสร็จก่อน (isLoaded) จึงจะรู้ว่าเครื่องนี้เช็คอินแล้วหรือยัง
+  if (tokenChecked && !tokenValid && isLoaded && !checkedIn) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-blue-950 flex items-center justify-center px-4">
-        <div className="max-w-md w-full bg-gray-900/80 border border-red-500/30 rounded-2xl p-8 text-center space-y-4">
-          <AlertCircle className="w-12 h-12 text-red-400 mx-auto" />
-          <h1 className="text-2xl font-bold text-red-400">QR หมดอายุ</h1>
-          <p className="text-gray-300">
+      <div className="min-h-screen bg-ceremony text-ink flex items-center justify-center px-4">
+        <div className="max-w-md w-full card-cream rounded-2xl p-8 text-center space-y-4">
+          <AlertCircle className="w-12 h-12 text-copper-500 mx-auto" />
+          <h1 className="text-2xl font-serif-thai font-bold text-copper-600">QR หมดอายุ</h1>
+          <p className="text-ink/75">
             QR นี้ไม่สามารถใช้งานได้แล้ว กรุณาสแกน QR ล่าสุดจากจุดลงทะเบียน
           </p>
           {/*<button
@@ -535,67 +539,73 @@ function HomeContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-blue-950 relative overflow-hidden">
-      {/* AI-themed animated background elements */}
+    <div className="min-h-screen bg-ceremony text-ink relative overflow-hidden">
+      {/* ลำแสงและประกายทองจางๆ */}
+      <div className="absolute inset-0 ceremony-rays pointer-events-none"></div>
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl animate-pulse delay-500"></div>
+        <div className="absolute top-16 right-[12%] w-2 h-2 bg-brass-300 rounded-full blur-[1px] animate-pulse"></div>
+        <div className="absolute top-40 left-[8%] w-1.5 h-1.5 bg-brass-400 rounded-full animate-pulse delay-500"></div>
+        <div className="absolute top-[55%] right-[6%] w-1.5 h-1.5 bg-copper-300 rounded-full animate-pulse delay-1000"></div>
+        <div className="absolute bottom-24 left-[15%] w-2 h-2 bg-patina-300 rounded-full blur-[1px] animate-pulse"></div>
       </div>
 
-      {/* Grid pattern overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e3a8a_1px,transparent_1px),linear-gradient(to_bottom,#1e3a8a_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-10"></div>
+      {/* พลุเบาๆ (4 ลูก น้อยกว่าหน้า QR) */}
+      <LightFireworks count={4} />
+      {/* ประกายร่วงลงมาแบบหน้า QR (12 เม็ด น้อยกว่า QR ที่มี 30) */}
+      <FallingParticles count={12} />
+
       <main className="container mx-auto px-4 py-8 relative z-10">
         <div className="max-w-2xl mx-auto">
           {/* Loading State */}
           {!isLoaded && (
             <div className="text-center py-20">
-              <div className="inline-flex items-center justify-center w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-              <p className="text-gray-400">กำลังโหลดข้อมูล...</p>
+              <div className="inline-flex items-center justify-center w-16 h-16 border-4 border-brass-400 border-t-transparent rounded-full animate-spin mb-4"></div>
+              <p className="text-ink/60">กำลังโหลดข้อมูล...</p>
             </div>
           )}
 
-          {/* Hero Section */}
+          {/* Hero Section - โทน "Choices That Matter" */}
           {isLoaded && (
             <>
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-blue-500 via-blue-600 to-cyan-500 rounded-full mb-6 shadow-2xl shadow-blue-500/50 relative">
-              <div className="absolute inset-0 rounded-full bg-blue-400 animate-ping opacity-20"></div>
-              <Calendar className="w-12 h-12 text-white relative z-10" />
-            </div>
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <Sparkles className="w-6 h-6 text-blue-400 animate-pulse" />
-              <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent mb-2">
-                งานปีใหม่ 2026
-            </h1>
-              <Sparkles className="w-6 h-6 text-blue-400 animate-pulse" />
-            </div>
-            <p className="text-lg text-gray-300 font-light">
-              ระบบเช็คอินพนักงาน
+          <div className="text-center mb-10 pt-4">
+            <p className="font-display text-xl sm:text-2xl tracking-[0.35em] text-patina-500 mb-1 pl-[0.35em]">
+              CHOICES
             </p>
-            <div className="mt-4 flex items-center justify-center gap-2">
-              <div className="h-px w-16 bg-gradient-to-r from-transparent to-blue-500"></div>
-              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-              <div className="h-px w-16 bg-gradient-to-l from-transparent to-blue-500"></div>
+            <h1 className="font-display font-semibold text-4xl sm:text-6xl leading-tight tracking-wide text-brass">
+              THAT MATTER
+            </h1>
+            <p className="font-serif-thai font-semibold text-xl sm:text-2xl text-brass mt-2">
+            ทางเลือกที่มีความหมาย
+            </p>
+            <p className="font-serif-thai italic text-sm text-ink/55 mt-3 tracking-wide">
+              New Year&apos;s Party Celebration · งานปีใหม่
+            </p>
+            <p className="font-display font-bold text-5xl sm:text-6xl text-brass mt-1">
+              2027
+            </p>
+            <div className="mt-4 flex items-center justify-center gap-3">
+              <div className="h-px w-16 bg-gradient-to-r from-transparent to-brass-500"></div>
+              <Sparkles className="w-4 h-4 text-brass-500" />
+              <div className="h-px w-16 bg-gradient-to-l from-transparent to-brass-500"></div>
             </div>
           </div>
 
           {/* Warning: Device Already Checked In */}
           {deviceAlreadyCheckedIn && !checkedIn && (
-            <div className="bg-red-900/30 border-2 border-red-500/50 rounded-xl p-6 mb-6 backdrop-blur-sm">
+            <div className="bg-copper-300/15 border border-copper-400/50 rounded-xl p-6 mb-6 backdrop-blur-sm">
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0">
-                  <AlertCircle className="w-8 h-8 text-red-400" />
+                  <AlertCircle className="w-8 h-8 text-copper-500" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-bold text-red-400 mb-2">
+                  <h3 className="text-xl font-serif-thai font-bold text-copper-600 mb-2">
                     เครื่องมือถือนี้เช็คอินแล้ว
                   </h3>
-                  <p className="text-red-200 mb-4">
+                  <p className="text-ink/75 mb-4">
                     เครื่องมือถือนี้ได้ทำการเช็คอินไปแล้ว กรุณาใช้เครื่องมือถืออื่นหรือติดต่อเจ้าหน้าที่หากต้องการเช็คอินใหม่
                   </p>
-                  <div className="bg-red-900/20 rounded-lg p-3 border border-red-500/30">
-                    <p className="text-sm text-red-300">
+                  <div className="bg-cream-50/70 rounded-lg p-3 border border-copper-400/30">
+                    <p className="text-sm text-copper-700">
                       <span className="font-semibold">หมายเหตุ:</span> ระบบจำเครื่องมือถือของคุณเพื่อป้องกันการเช็คอินซ้ำ
                     </p>
                   </div>
@@ -607,13 +617,13 @@ function HomeContent() {
           {/* Check-in Form or Success Message */}
           {!checkedIn ? (
             deviceAlreadyCheckedIn ? (
-              <div className="bg-gray-900/80 backdrop-blur-xl rounded-2xl shadow-2xl p-8 border border-red-500/30">
+              <div className="card-cream rounded-2xl p-8">
                 <div className="text-center">
-                  <AlertCircle className="w-16 h-16 text-red-400 mx-auto mb-4" />
-                  <h2 className="text-2xl font-bold text-red-400 mb-2">
+                  <AlertCircle className="w-16 h-16 text-copper-500 mx-auto mb-4" />
+                  <h2 className="text-2xl font-serif-thai font-bold text-copper-600 mb-2">
                     ไม่สามารถเช็คอินได้
                   </h2>
-                  <p className="text-gray-300">
+                  <p className="text-ink/75">
                     เครื่องมือถือนี้ได้ทำการเช็คอินไปแล้ว
                   </p>
                 </div>
@@ -622,35 +632,34 @@ function HomeContent() {
               <CheckInForm onSubmit={handleCheckIn} />
             )
           ) : (
-            <div className="bg-gray-900/80 backdrop-blur-xl rounded-2xl shadow-2xl p-8 border border-blue-500/30 relative overflow-hidden">
-              {/* Glowing border effect */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/20 via-cyan-500/20 to-blue-500/20 opacity-50 blur-xl"></div>
-              
+            <div className="card-cream rounded-2xl p-8 relative overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-[2px] brass-rule"></div>
+
               <div className="text-center relative z-10">
-                <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full mb-6 shadow-lg shadow-green-500/50 relative">
-                  <div className="absolute inset-0 rounded-full bg-green-400 animate-ping opacity-30"></div>
-                  <CheckCircle className="w-12 h-12 text-white relative z-10" />
+                <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-patina-300 to-patina-600 rounded-full mb-6 shadow-lg shadow-patina-600/30 ring-4 ring-brass-300/60 relative">
+                  <div className="absolute inset-0 rounded-full bg-patina-300 animate-ping opacity-25"></div>
+                  <CheckCircle className="w-12 h-12 text-cream-50 relative z-10" />
                 </div>
-                <h2 className="text-3xl font-bold text-transparent bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text mb-2">
+                <h2 className="text-3xl font-serif-thai font-bold text-patina mb-2">
                   เช็คอินสำเร็จ!
                 </h2>
-                <p className="text-gray-400 mb-6 text-sm">
+                <p className="text-ink/60 mb-6 text-sm">
                   กรุณาแสดงหน้านี้ต่อเจ้าหน้าที่เพื่อยืนยันการเช็คอิน
                 </p>
-                
+
                 {/* Check-in Information Card */}
-                <div className="bg-gradient-to-r from-blue-900/50 via-cyan-900/50 to-blue-900/50 rounded-xl p-6 mb-6 border border-blue-500/30 backdrop-blur-sm">
+                <div className="bg-gradient-to-br from-cream-100 via-cream-50 to-patina-50 rounded-xl p-6 mb-6 border border-brass-400/40 text-left">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-blue-400 font-semibold text-lg">ข้อมูลการเช็คอิน</h3>
+                    <h3 className="font-serif-thai text-brass-700 font-semibold text-lg">ข้อมูลการเช็คอิน</h3>
                     {/* สีที่รัดข้อมือ - แสดงข้างๆ หัวข้อ */}
                     {selectedColorName && selectedColor && (
-                      <div className="flex items-center gap-2 bg-gray-800/60 rounded-lg px-3 py-2 border border-gray-700/50">
-                        <div 
-                          className="w-8 h-8 rounded-lg shadow-md border border-white/20"
+                      <div className="flex items-center gap-2 bg-cream-50 rounded-lg px-3 py-2 border border-brass-400/30">
+                        <div
+                          className="w-8 h-8 rounded-lg shadow-md border border-ink/10"
                           style={{ backgroundColor: selectedColor }}
                         ></div>
                         <div>
-                          <p className="text-xs text-gray-400">สีประจำตัว</p>
+                          <p className="text-xs text-ink/55">สีประจำตัว</p>
                           <p className="text-sm font-bold" style={{ color: selectedColor }}>
                             {selectedColorName}
                           </p>
@@ -659,17 +668,17 @@ function HomeContent() {
                     )}
                   </div>
                   <div className="space-y-3">
-                    <div className="flex justify-between items-center py-2 border-b border-blue-500/20">
-                      <span className="text-gray-400 font-medium">รหัสพนักงาน:</span>
-                      <span className="text-blue-400 font-bold text-lg font-mono">{employeeData.staffid}</span>
+                    <div className="flex justify-between items-center py-2 border-b border-brass-400/25">
+                      <span className="text-ink/55 font-medium">รหัสพนักงาน:</span>
+                      <span className="text-brass-700 font-bold text-lg font-mono">{employeeData.staffid}</span>
                     </div>
-                    <div className="flex justify-between items-center py-2 border-b border-blue-500/20">
-                      <span className="text-gray-400 font-medium">ชื่อ:</span>
-                      <span className="text-white font-bold text-lg">{employeeData.name}</span>
+                    <div className="flex justify-between items-center py-2 border-b border-brass-400/25">
+                      <span className="text-ink/55 font-medium">ชื่อ:</span>
+                      <span className="text-ink font-bold text-lg">{employeeData.name}</span>
                     </div>
                     <div className="flex justify-between items-center py-2">
-                      <span className="text-gray-400 font-medium">เวลา:</span>
-                      <span className="text-cyan-400 font-bold text-lg font-mono">
+                      <span className="text-ink/55 font-medium">เวลา:</span>
+                      <span className="text-patina-600 font-bold text-lg font-mono">
                         {employeeData.checkinTime 
                           ? formatThaiDateTime(employeeData.checkinTime)
                           : formatThaiDateTime(new Date())
@@ -678,21 +687,21 @@ function HomeContent() {
                     </div>
                     {/* แสดงสีที่รัดข้อมือด้านล่างถ้ายังไม่มีข้างบน */}
                     {selectedColorName && selectedColor && (
-                      <div className="pt-3 border-t border-blue-500/20">
-                        <div className="flex items-center justify-center gap-3 bg-gray-800/40 rounded-lg p-3">
-                          <div 
-                            className="w-12 h-12 rounded-lg shadow-lg border-2 border-white/20"
+                      <div className="pt-3 border-t border-brass-400/25">
+                        <div className="flex items-center justify-center gap-3 bg-cream-50 border border-brass-400/25 rounded-lg p-3">
+                          <div
+                            className="w-12 h-12 rounded-lg shadow-lg border-2 border-ink/10"
                             style={{ backgroundColor: selectedColor }}
                           ></div>
                           <div className="text-left">
-                            <p className="text-xs text-gray-400 mb-1">กำไลข้อมือของคุณ</p>
+                            <p className="text-xs text-ink/55 mb-1">กำไลข้อมือของคุณ</p>
                             <p className="text-xl font-bold" style={{ color: selectedColor }}>
                               {selectedColorName}
                             </p>
                           </div>
                         </div>
-                        <p className="text-xs text-gray-400 text-center mt-2">
-                          📌 กรุณารับกำไลข้อมือที่จุดลงทะเบียน <span className="font-bold text-white">{selectedColorName}</span> ตามสีที่แสดงด้านบน
+                        <p className="text-xs text-ink/55 text-center mt-2">
+                          📌 กรุณารับกำไลข้อมือที่จุดลงทะเบียน <span className="font-bold text-ink">{selectedColorName}</span> ตามสีที่แสดงด้านบน
                         </p>
                       </div>
                     )}
@@ -854,33 +863,33 @@ function HomeContent() {
                     </div>
                 )} */}
 
-                <p className="text-gray-400 mt-4">
+                <p className="font-serif-thai text-ink/60 mt-4">
                   ขอให้สนุกกับงานปีใหม่นะครับ! 🎆
                 </p>
-                
+
               </div>
             </div>
           )}
 
           {/* Info Card */}
-          <div className="mt-8 bg-gray-900/60 backdrop-blur-xl rounded-xl p-6 border border-blue-500/20 relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-500"></div>
-                <h3 className="font-semibold text-blue-400 mb-4 flex items-center text-lg">
+          <div className="mt-8 card-cream rounded-xl p-6 relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-[2px] brass-rule"></div>
+                <h3 className="font-serif-thai font-semibold text-brass-700 mb-4 flex items-center text-lg">
                   <span className="mr-2">ℹ️</span>
-                  ข้อมูลงานปีใหม่ 2026
+                  ข้อมูลงานปีใหม่ 2027
                 </h3>
-                <ul className="space-y-3 text-gray-300">
+                <ul className="space-y-3 text-ink/80">
                   <li className="flex items-start group">
-                    <span className="mr-3 text-blue-400">📅</span>
-                    <span className="group-hover:text-white transition-colors">วันที่: 20 ธันวาคม 2026</span>
+                    <span className="mr-3">📅</span>
+                    <span className="group-hover:text-ink transition-colors">วันที่: 12 ธันวาคม 2026</span>
                   </li>
                       <li className="flex items-start group">
-                        <span className="mr-3 text-cyan-400">🕐</span>
-                        <span className="group-hover:text-white transition-colors">เวลา: 17:00 - 23:00 น.</span>
+                        <span className="mr-3">🕐</span>
+                        <span className="group-hover:text-ink transition-colors">เวลา: 18:00 - 23:00 น.</span>
                   </li>
                       <li className="flex items-start group">
-                        <span className="mr-3 text-blue-400">📍</span>
-                        <span className="group-hover:text-white transition-colors">สถานที่: Hall 3 BanQuet Hall At Nathong</span>
+                        <span className="mr-3">📍</span>
+                        <span className="group-hover:text-ink transition-colors">สถานที่: W1 Bangkoknoi Hotel | Amphoe Bang Yai </span>
                   </li>
                 </ul>
               </div>
@@ -896,8 +905,8 @@ function HomeContent() {
 export default function Home() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-br from-blue-950 via-black to-blue-900 flex items-center justify-center">
-        <div className="text-white text-xl">กำลังโหลด...</div>
+      <div className="min-h-screen bg-ceremony flex items-center justify-center">
+        <div className="text-ink/70 text-xl">กำลังโหลด...</div>
       </div>
     }>
       <HomeContent />

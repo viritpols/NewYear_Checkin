@@ -6,7 +6,9 @@ import {
   Kanit,
   Maitree,
   Mali,
-  Mitr
+  Mitr,
+  Cinzel,
+  Noto_Serif_Thai
 } from 'next/font/google'
 import './globals.css'
 
@@ -62,6 +64,21 @@ const mitr = Mitr({
   display: 'swap',
 })
 
+// ฟอนต์หัวเรื่องธีม "Choices That Matter"
+const cinzel = Cinzel({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-cinzel',
+  display: 'swap',
+})
+
+const notoSerifThai = Noto_Serif_Thai({
+  subsets: ['thai', 'latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-noto-serif-thai',
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
   title: 'ระบบเช็คอินงานปีใหม่ 2026',
   description: 'ระบบเช็คอินเข้างานปีใหม่สำหรับพนักงาน',
@@ -74,7 +91,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="th">
-      <body className={`${anuphan.variable} ${ibmPlexSansThaiLooped.variable} ${ibmPlexSansThai.variable} ${kanit.variable} ${maitree.variable} ${mali.variable} ${mitr.variable} font-sans`}>
+      <body className={`${anuphan.variable} ${ibmPlexSansThaiLooped.variable} ${ibmPlexSansThai.variable} ${kanit.variable} ${maitree.variable} ${mali.variable} ${mitr.variable} ${cinzel.variable} ${notoSerifThai.variable} font-sans`}>
         {children}
       </body>
     </html>
