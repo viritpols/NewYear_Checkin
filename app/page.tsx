@@ -514,11 +514,8 @@ function HomeContent() {
     setRewardError(null)
   }
 
-  // ถ้า token ไม่ผ่าน ให้แสดงหน้าจอบล็อก
-  // ยกเว้นเครื่องที่เช็คอินแล้ว: ให้เปิดดูหน้าข้อมูลของตัวเองได้เสมอ
-  // (เช่น สลับแอปแล้วหน้าโหลดใหม่หลัง QR หมดอายุ หรือเปิดลิงก์ไม่มี token)
-  // ต้องรอ device guard โหลดเสร็จก่อน (isLoaded) จึงจะรู้ว่าเครื่องนี้เช็คอินแล้วหรือยัง
-  if (tokenChecked && !tokenValid && isLoaded && !checkedIn) {
+  // ถ้า token ไม่ผ่าน ให้แสดงหน้าจอบล็อก (รวมถึงเครื่องที่เช็คอินแล้ว — ต้องสแกน QR ใหม่เพื่อดูข้อมูล)
+  if (tokenChecked && !tokenValid) {
     return (
       <div className="min-h-screen bg-ceremony text-ink flex items-center justify-center px-4">
         <div className="max-w-md w-full card-cream rounded-2xl p-8 text-center space-y-4">
