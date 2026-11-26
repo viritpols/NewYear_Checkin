@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Lock, UserPlus, LogOut, RefreshCw, CheckCircle, AlertCircle } from 'lucide-react'
 import StaffExcelImport from '@/components/StaffExcelImport'
 
-// หน้าเพิ่มรายชื่อพนักงานด้วยมือ (ซ่อนไว้ ใช้ได้เฉพาะคนที่รู้ path + ADMIN_KEY)
+// หน้าเพิ่มรายชื่อพนักงานด้วยมือ (ซ่อนไว้ ใช้ได้เฉพาะคนที่รู้ path + API_KEY)
 
 const STORAGE_KEY = 'staff-entry-admin-key'
 
@@ -87,7 +87,7 @@ export default function StaffEntryPage() {
   const loadRows = useCallback(async (key: string) => {
     setLoadingRows(true)
     try {
-      const res = await fetch('/api/staff-manual', { headers: { 'x-admin-key': key }, cache: 'no-store' })
+      const res = await fetch('/api/staff-manual', { headers: { 'x-api-key': key }, cache: 'no-store' })
       const data = await res.json().catch(() => ({}))
       if (res.ok && data.success) {
         setRows(data.data || [])
@@ -140,7 +140,7 @@ export default function StaffEntryPage() {
     try {
       const res = await fetch('/api/staff-manual', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+        headers: { 'Content-Type': 'application/json', 'x-api-key': adminKey },
         body: JSON.stringify(form),
       })
       const data = await res.json().catch(() => ({}))
@@ -181,7 +181,7 @@ export default function StaffEntryPage() {
             autoComplete="off"
             value={keyInput}
             onChange={(e) => setKeyInput(e.target.value)}
-            placeholder="รหัสผู้ดูแล (ADMIN_KEY)"
+            placeholder="รหัสผู้ดูแล (API_KEY)"
             className={inputClass}
             autoFocus
           />

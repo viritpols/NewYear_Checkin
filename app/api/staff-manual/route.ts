@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { query } from '@/lib/db'
 import { checkAdmin } from '@/lib/adminAuth'
 
-// API สำหรับหน้าเพิ่มรายชื่อด้วยมือ (ใช้ได้เฉพาะคนที่มี ADMIN_KEY)
-// ทุก request ต้องส่ง header: x-admin-key
+// API สำหรับหน้าเพิ่มรายชื่อด้วยมือ (ใช้ได้เฉพาะคนที่มี API_KEY)
+// ทุก request ต้องส่ง header: x-api-key
 
 export const dynamic = 'force-dynamic'
 

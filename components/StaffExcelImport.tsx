@@ -121,7 +121,7 @@ export default function StaffExcelImport({ adminKey, onDone }: { adminKey: strin
       // เทียบกับ DB
       const res = await fetch('/api/staff-manual/bulk', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+        headers: { 'Content-Type': 'application/json', 'x-api-key': adminKey },
         body: JSON.stringify({ action: 'check', staffids: valid.map(v => v.record.staffid) }),
       })
       const data = await res.json().catch(() => ({}))
@@ -192,7 +192,7 @@ export default function StaffExcelImport({ adminKey, onDone }: { adminKey: strin
         setProgress(`กำลังบันทึก ${Math.min(i + CHUNK, all.length)} / ${all.length}`)
         const res = await fetch('/api/staff-manual/bulk', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+          headers: { 'Content-Type': 'application/json', 'x-api-key': adminKey },
           body: JSON.stringify({
             action: 'commit',
             insert: chunk.filter(c => c.kind === 'insert').map(c => c.r),

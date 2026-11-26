@@ -3,6 +3,9 @@ import { query, executeTransaction } from '@/lib/db'
 import { cookies } from 'next/headers'
 import { checkRateLimit, checkSuspiciousPattern } from '@/utils/rateLimit'
 import mysql from 'mysql2/promise'
+import { checkAdmin } from '@/lib/adminAuth'
+
+export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest) {
   try {
@@ -328,8 +331,11 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// GET method to retrieve check-ins (optional, for admin)
-export async function GET() {
+// GET method to retrieve check-ins — เฉพาะ admin (ต้องมี x-api-key)
+export async function GET(request: NextRequest) {
+  const denied = checkAdmin(request)
+  if (denied) return denied
+
   try {
     const sql = 'SELECT * FROM checkinlog ORDER BY recordid DESC LIMIT 100'
     const results = await query(sql)

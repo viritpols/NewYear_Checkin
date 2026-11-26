@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { query } from '@/lib/db'
 import { cookies } from 'next/headers'
+import { checkAdmin } from '@/lib/adminAuth'
+
+export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest) {
   try {
@@ -89,12 +92,15 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// GET method to retrieve feedbacks (optional, for admin)
-export async function GET() {
+// GET method to retrieve feedbacks — เฉพาะ admin (ต้องมี x-api-key)
+export async function GET(request: NextRequest) {
+  const denied = checkAdmin(request)
+  if (denied) return denied
+
   try {
-    const sql = 'SELECT * FROM feedback ORDER BY created_at DESC LIMIT 100'
+    const sql = 'SELECT * FROM feedback LIMIT 100'
     const results = await query(sql)
-    
+
     return NextResponse.json(
       {
         success: true,
@@ -104,12 +110,9 @@ export async function GET() {
     )
   } catch (error: any) {
     console.error('Error fetching feedbacks:', error)
-    
+
     return NextResponse.json(
-      {
-        error: 'Failed to fetch feedbacks',
-        message: error.message || 'Unknown error'
-      },
+      { error: 'Failed to fetch feedbacks' },
       { status: 500 }
     )
   }
